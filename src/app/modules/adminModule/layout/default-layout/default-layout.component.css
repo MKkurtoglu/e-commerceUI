@@ -1,0 +1,54 @@
+/* Sayfa düzeni */
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Tam ekran yüksekliği */
+  }
+  
+  .body {
+    display: flex;
+    flex-grow: 1;
+    position: relative;
+  }
+  
+  /* Sidebar alanı */
+  .sidebar {
+    width: 250px; /* Sidebar genişliği */
+    height: 100vh; /* Tam ekran yüksekliği */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Sidebar'ın önde kalması için */
+  }
+  :host {
+    .ng-scrollbar {
+      --scrollbar-padding: 1px;
+      --scrollbar-size: 5px;
+      --scrollbar-thumb-color: var(--cui-gray-500, #999);
+      --scrollbar-thumb-hover-color: var(--cui-gray-400, #999);
+      --scrollbar-hover-size: calc(var(--scrollbar-size) * 1.5);
+    }
+  }
+  /* Sidebar sabitlendiğinde, içerik alanının sola kaymaması için */
+  .sidebar + .body {
+    margin-left: 250px; /* Sidebar genişliği kadar boşluk bırak */
+  }
+  
+  /* Router outlet'in sidebar ile çakışmaması için boşluk bırakıyoruz */
+  .body .c-container {
+    flex-grow: 1;
+    padding: 20px;
+    width: calc(100% - 250px); /* Sidebar genişliği kadar alan */
+  }
+  
+  /* Mobil uyumluluk için küçük ekranlarda sidebar'ın genişliğini ayarlayın */
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 200px; /* Mobilde daha dar bir sidebar */
+    }
+    
+    .body .c-container {
+      margin-left: 200px; /* Mobilde sidebar genişliğine göre boşluk ayarı */
+    }
+  }
+  

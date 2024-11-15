@@ -1,0 +1,77 @@
+<div class="cart-wrapper">
+  <div class="nav-item dropdown">
+    <button class="btn btn-outline-secondary position-relative dropdown-toggle" 
+            type="button" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        {{cartItemCount}}
+        <span class="visually-hidden">sepet ürün sayısı</span>
+      </span>
+    </button>
+
+    <!-- Cart Dropdown Menu -->
+    <div class="dropdown-menu dropdown-menu-end cart-dropdown">
+      <div class="cart-header p-3 border-bottom">
+        <h6 class="m-0">Sepetim ({{cartItems.length}} Ürün)</h6>
+      </div>
+
+      <div class="cart-items-container">
+        <div *ngIf="cartItems.length === 0" class="p-4 text-center text-muted">
+          <i class="fas fa-shopping-basket fa-2x mb-3"></i>
+          <p class="mb-0">Sepetiniz boş</p>
+        </div>
+
+        <div *ngFor="let item of cartItems" class="cart-item p-3 border-bottom">
+          <div class="d-flex align-items-center">
+            <!-- Ürün Resmi -->
+            <div class="cart-item-image">
+              <img [src]=" getImageUrl(item.product.imagePaths[0])" 
+                   [alt]="item.product.productName"
+                   class="rounded">
+            </div>
+            
+            <!-- Ürün Detayları -->
+            <div class="cart-item-details ms-3 flex-grow-1">
+              <h6 class="mb-1">{{item.product.productName}}</h6>
+              <div class="text-muted small mb-1">
+                {{item.product.brand?.brandName}} - {{item.product.category?.categoryName}}
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="quantity-badge">
+                  <span class="text-muted">Adet:</span> {{item.quantity}}
+                </div>
+                <div class="price fw-bold">
+                  {{item.product.unitPrice * item.quantity | currency:'TRY':'symbol-narrow':'1.2-2'}}
+                </div>
+              </div>
+            </div>
+
+            <!-- Silme Butonu -->
+            <button class="btn btn-link text-danger ms-2 p-0" 
+                    (click)="removeFromCart(item.product.productId)"
+                    title="Ürünü Sil">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="cart-footer p-3 border-top" *ngIf="cartItems.length > 0">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-muted">Toplam</span>
+          <span class="fw-bold">{{calculateTotal() | currency:'TRY':'symbol-narrow':'1.2-2'}}</span>
+        </div>
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary" routerLink="/sepet">
+            Sepete Git
+          </button>
+          <button class="btn btn-success">
+            Alışverişi Tamamla
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

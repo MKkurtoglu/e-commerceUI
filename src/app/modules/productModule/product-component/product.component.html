@@ -1,0 +1,103 @@
+<div class="container mt-4">
+  <div class="category-stories">
+    <div class="category-stories__container">
+      <div class="category-stories__scroll">
+        <div class="category-stories__wrapper">
+          <app-category-stories></app-category-stories>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="row">
+    <!-- Sol Panel: Kategoriler ve Filtreler -->
+    <div class="col-lg-3 col-md-4">
+      <div class="sidebar">
+        
+        <app-category></app-category>
+
+        
+        <app-product-filter
+          (productPriceChanged)="handleProductPrice($event)"
+          (productBrandChanged)="handleProductBrand($event)">
+        </app-product-filter>
+      </div>
+    </div>
+
+    <!-- Sağ Panel: Ürünler -->
+    <div class="col-lg-9 col-md-8">
+      <div *ngIf="!dataloaded" class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+
+      <div class="row">
+        <div *ngFor="let product of (filteredProducts$ | async) | paginate: { 
+          itemsPerPage: itemsPerPage, 
+          currentPage: currentPage,
+          totalItems: totalItems 
+        }" class="col-lg-4 col-md-6 col-sm-12 mb-4">
+          <div class="product-card" [routerLink]="['/products', product.productId]">
+            <!-- Favori Butonu -->
+            <button class="favorite-btn" (click)="toggleFavorite(product, $event)">
+              <i class="far" [ngClass]="isFavoritee(product.productId) ? 'fas fa-heart' : 'far fa-heart'"></i>
+            </button>
+    
+            <!-- Ürün Resimleri Carousel -->
+            <div class="product-images" [id]="'carousel-' + product.productId" (click)="$event.stopPropagation()">
+              <div class="simple-slider">
+                <div class="slider-container">
+                  <img *ngFor="let imagePath of product.imagePaths; let i = index"
+                       [src]="getImageUrl(imagePath)"
+                       [alt]="product.productName"
+                       class="product-image"
+                       [class.active]="i === getCurrentImageIndex(product.productId)"
+                       (error)="onImageError($event)">
+                </div>
+                <button class="slider-prev" (click)="prevImage(product.productId, $event)">
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="slider-next" (click)="nextImage(product.productId, $event)">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+    
+            <!-- Ürün Bilgileri -->
+            <div class="product-info">
+              <div class="product-category">{{ product.category?.categoryName }}</div>
+              <h3 class="product-name">{{ product.productName }}</h3>
+              <div class="product-brand">{{ product.brand?.brandName }}</div>
+              
+              <div class="product-price">
+                <div class="price">
+                  <span class="current-price">{{ product.unitPrice | currency:"TRY" }}</span>
+                  <span class="vat-price">KDV Dahil: {{ product.unitPrice | vatAdded:18 | currency:"TRY" }}</span>
+                </div>
+                <div class="stock" [ngClass]="{'low-stock': product.unitsInStock < 10}">
+                  <i class="fas fa-box"></i>
+                  Stok: {{ product.unitsInStock }}
+                </div>
+              </div>
+    
+              <!-- Sepete Ekle Butonu -->
+              <button class="add-to-cart" 
+                      (click)="addToCart(product, $event)"
+                      [disabled]="product.unitsInStock === 0">
+                <i class="fas fa-shopping-cart"></i>
+                {{ product.unitsInStock === 0 ? 'Stokta Yok' : 'Sepete Ekle' }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pagination-container d-flex justify-content-center mt-4">
+        <pagination-controls
+          (pageChange)="onPageChange($event)"
+          previousLabel="Önceki"
+          nextLabel="Sonraki">
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>

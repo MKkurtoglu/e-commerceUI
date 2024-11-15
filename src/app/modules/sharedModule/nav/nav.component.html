@@ -1,0 +1,147 @@
+<!-- Main Navigation -->
+<nav class="main-nav">
+  <div class="container">
+      <div class="nav-wrapper">
+          <!-- Logo Area -->
+          <div class="nav-brand">
+              <a routerLink="/">
+                  <img src="assets/images/logo.png" alt="Logo" class="brand-logo">
+              </a>
+          </div>
+
+          <!-- Mobile Menu Toggle -->
+          <button class="mobile-toggle" (click)="toggleMobileMenu()">
+              <span></span>
+              <span></span>
+              <span></span>
+          </button>
+
+          <!-- Main Menu -->
+          <div class="nav-content" [class.active]="isMobileMenuOpen">
+              <!-- Search Bar -->
+              <div class="nav-search">
+                  <div class="search-box">
+                      <input type="text" placeholder="Ürün ara...">
+                      <button type="button">
+                          <i class="fas fa-search"></i>
+                      </button>
+                  </div>
+              </div>
+
+              <!-- Navigation Links -->
+              <ul class="nav-links">
+                  <li>
+                      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                          <i class="fas fa-home"></i>
+                          <span>Ana Sayfa</span>
+                      </a>
+                  </li>
+                  <!-- Kategoriler dropdown kısmını güncelleyelim -->
+<li class="has-dropdown">
+    <a (click)="toggleCategoryDropdown($event)">
+        <i class="fas fa-th-large"></i>
+        <span>Kategoriler</span>
+        <i class="fas fa-chevron-down" [class.rotate]="isCategoryDropdownOpen"></i>
+    </a>
+    <ul class="dropdown-menu" [class.show]="isCategoryDropdownOpen">
+        <li *ngFor="let category of categories">
+            <a [routerLink]="['/category', category.categoryId]" 
+               (click)="isCategoryDropdownOpen = false">
+                {{ category.categoryName }}
+                <span class="category-count" *ngIf="category.productCount">
+                    ({{ category.productCount }})
+                </span>
+            </a>
+        </li>
+        <li *ngIf="categories?.length === 0" class="no-categories">
+            <span>Kategori bulunamadı</span>
+        </li>
+    </ul>
+</li>
+                  <li>
+                      <a routerLink="/products" routerLinkActive="active">
+                          <i class="fas fa-tag"></i>
+                          <span>Ürünler</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a routerLink="/contact" routerLinkActive="active">
+                          <i class="fas fa-envelope"></i>
+                          <span>İletişim</span>
+                      </a>
+                  </li>
+              </ul>
+
+              <!-- User Actions -->
+              <div class="nav-actions">
+                  <!-- Cart Button -->
+                  <a routerLink="/cart" class="action-btn cart-btn">
+                      <i class="fas fa-shopping-cart"></i>
+                      <span class="badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+                  </a>
+
+                  <!-- User Menu -->
+                  <ng-container *ngIf="isLoggedIn; else loginButtons">
+                      <div class="user-menu">
+                        <button class="action-btn user-btn" (click)="toggleUserMenu($event)">
+                              <i class="fas fa-user-circle"></i>
+                              <span>{{ userName }}</span>
+                              <i class="fas fa-chevron-down"></i>
+                          </button>
+                          <div class="dropdown-menu user-dropdown" [class.show]="isUserMenuOpen">
+                              <div class="user-header">
+                                  <i class="fas fa-user-circle"></i>
+                                  <div class="user-info">
+                                      <h4>{{ userName }}</h4>
+                                      <span>{{ userEmail }}</span>
+                                  </div>
+                              </div>
+                              <ul>
+                                  <li>
+                                      <a routerLink="/profile">
+                                          <i class="fas fa-user"></i>
+                                          <span>Profilim</span>
+                                      </a>
+                                  </li>
+                                  <li>
+                                      <a routerLink="/orders">
+                                          <i class="fas fa-shopping-bag"></i>
+                                          <span>Siparişlerim</span>
+                                      </a>
+                                  </li>
+                                  <li>
+                                      <a routerLink="/favorites">
+                                          <i class="fas fa-heart"></i>
+                                          <span>Favorilerim</span>
+                                      </a>
+                                  </li>
+                                  <li>
+                                      <a routerLink="/settings">
+                                          <i class="fas fa-cog"></i>
+                                          <span>Ayarlar</span>
+                                      </a>
+                                  </li>
+                                  <li class="divider"></li>
+                                  <li>
+                                      <a (click)="logout()">
+                                          <i class="fas fa-sign-out-alt"></i>
+                                          <span>Çıkış Yap</span>
+                                      </a>
+                                  </li>
+                              </ul>
+                          </div>
+                      </div>
+                  </ng-container>
+
+                  <!-- Login/Register Buttons -->
+                  <ng-template #loginButtons>
+                      <div class="auth-buttons">
+                          <a routerLink="/auth/login" class="btn btn-outline">Giriş Yap</a>
+                          <a routerLink="/auth/register" class="btn btn-primary">Kayıt Ol</a>
+                      </div>
+                  </ng-template>
+              </div>
+          </div>
+      </div>
+  </div>
+</nav>

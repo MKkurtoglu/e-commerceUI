@@ -1,0 +1,16 @@
+<div class="category-stories">
+    <div class="category-stories__container">
+      <div class="category-stories__scroll">
+        <div class="category-stories__wrapper">
+          <a *ngFor="let category of categories" 
+          [routerLink]="['/products/category', category.categoryId]" 
+             class="category-stories__item">
+            <div class="category-stories__image-wrapper">
+              <img [src]=" getImageUrl(category.imagePaths)" [alt]="category.categoryName" class="category-stories__image">
+            </div>
+            <span class="category-stories__name">{{category.categoryName}}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>

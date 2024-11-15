@@ -1,0 +1,123 @@
+<div container fade-in *ngIf="!isAddingOrEditing">
+  <div class="col-md-2">
+    <button class="btn btn-primary" type="button" (click)="showAdd()">Ürün Ekle</button>
+  </div>
+    <table  class="table table-striped col-md-10 table-responsive">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Ürün Adı</th>
+          <th scope="col">Kategori</th>
+          <th scope="col">Model</th>
+          <th scope="col">Stok</th>
+          <th scope="col">Fiyat</th>
+          <th scope="col">İşlemler</th>
+          <th scope="col">Resimler</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td data-label="id">{{ product.productId }}</td>
+          <td data-label="Ürün Adı">{{ product.productName }}</td>
+          <td data-label="Kategori">{{ product.category?.categoryName }}</td>
+          <td data-label="Model">{{ product.model?.modelName }}</td>
+          <td data-label="Stok">{{ product.unitsInStock }}</td>
+          <td data-label="Fiyat">{{ product.unitPrice | currency }}</td>
+  
+          <td class="islem">
+            <label [for]="'fileInput-' + product.productId" class="btn btn-info mt-3">
+              Ürün Resmi Ekle
+            </label>
+            <input type="file" [id]="'fileInput-' + product.productId" class="file-input" accept="image/*"
+              (change)="onFileChange($event, product.productId)" style="display: none;">
+            <button class="btn btn-warning btn-sm me-2" (click)="editProduct(product)">Düzenle</button>
+            <button class="btn btn-danger btn-sm" (click)="deleteProduct(product.productId)">Sil</button>
+          </td>
+          <td>
+            <button [routerLink]="['/Admin/Ürünler/Resimler', product.productId]" class="btn btn-primary btn-sm">
+              Resimler
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+   
+  </div>
+  
+
+  <div *ngIf="isAddingOrEditing">
+    <h3>Ürün Ekleme / Güncelleme</h3>
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      
+      <!-- Ürün Adı -->
+      <div class="form-group">
+        <label for="productName">Ürün Adı</label>
+        <input id="productName" formControlName="productName" type="text" class="form-control" placeholder="Ürün Adı Girin">
+        <div *ngIf="productForm.get('productName')?.touched && productForm.get('productName')?.hasError('required')" class="text-danger">
+          Ürün adı zorunludur.
+        </div>
+      </div>
+  
+      <!-- Kategori -->
+      <div class="form-group">
+        <label for="category">Kategori</label>
+        <select id="category" formControlName="categoryId" class="form-control">
+          <option *ngFor="let category of categories" [value]="category.categoryId">{{ category.categoryName }}</option>
+        </select>
+        <div *ngIf="productForm.get('categoryId')?.touched && productForm.get('categoryId')?.invalid" class="text-danger">
+          Kategori seçimi zorunludur.
+        </div>
+      </div>
+      
+<!-- Marka Seçimi -->
+      <div class="form-group">
+        <label for="brand">Marka</label>
+        <select id="brand" formControlName="brandId" class="form-control" (change)="onBrandChange($event)">
+          <option *ngFor="let brand of brands" [value]="brand.brandId">{{ brand.brandName }}</option>
+        </select>
+        <div *ngIf="productForm.get('brandId')?.touched && productForm.get('brandId')?.invalid" class="text-danger">
+          Marka seçimi zorunludur.
+        </div>
+      </div>
+
+      <!-- Model -->
+      <div class="form-group">
+        <label for="model">Model</label>
+        <select id="model" formControlName="modelId" class="form-control">
+          <option *ngFor="let model of models" [value]="model.modelId">{{ model.modelName }}</option>
+        </select>
+        <div *ngIf="productForm.get('modelId')?.touched && productForm.get('modelId')?.invalid" class="text-danger">
+          Model seçimi zorunludur.
+        </div>
+      </div>
+  
+      <!-- Stok Adedi -->
+      <div class="form-group">
+        <label for="unitsInStock">Stok Adedi</label>
+        <input id="unitsInStock" formControlName="unitsInStock" type="number" class="form-control" placeholder="Stok Adedi Girin">
+        <div *ngIf="productForm.get('unitsInStock')?.touched && productForm.get('unitsInStock')?.hasError('required')" class="text-danger">
+          Stok adedi zorunludur.
+        </div>
+        <div *ngIf="productForm.get('unitsInStock')?.touched && productForm.get('unitsInStock')?.hasError('min')" class="text-danger">
+          Stok adedi en az 0 olmalıdır.
+        </div>
+      </div>
+  
+      <!-- Birim Fiyat -->
+      <div class="form-group">
+        <label for="unitPrice">Birim Fiyat</label>
+        <input id="unitPrice" formControlName="unitPrice" type="number" class="form-control" placeholder="Birim Fiyat Girin">
+        <div *ngIf="productForm.get('unitPrice')?.touched && productForm.get('unitPrice')?.hasError('required')" class="text-danger">
+          Birim fiyat zorunludur.
+        </div>
+        <div *ngIf="productForm.get('unitPrice')?.touched && productForm.get('unitPrice')?.hasError('min')" class="text-danger">
+          Birim fiyat en az 0 olmalıdır.
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-primary">Kaydet</button>
+      <button type="button" class="btn btn-secondary" (click)="backandreset()">Vazgeç</button>
+    </form>
+  </div>
+  

@@ -1,0 +1,123 @@
+<div class="container mt-4">
+    <div class="row">
+      <!-- Sol Kolon - Ürün Resimleri -->
+      <div class="col-md-5">
+        <div class="product-gallery">
+          <!-- Ana Resim -->
+          <div class="main-image mb-3">
+            <img [src]="getImageUrl(selectedImage) || getImageUrl(product?.primaryImagePath)" 
+                 [alt]="product?.productName" 
+                 class="img-fluid rounded">
+          </div>
+          <!-- Küçük Resimler -->
+          <div class="thumbnail-images row g-2">
+            <div *ngFor="let image of product?.imagePaths" 
+                 class="col-3">
+              <img [src]="getImageUrl(image)" 
+                   [alt]="product?.productName"
+                   class="img-fluid rounded cursor-pointer"
+                   (click)="selectedImage = image"
+                   [class.selected]="selectedImage === image">
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Sağ Kolon - Ürün Bilgileri -->
+      <div class="col-md-7">
+        <div class="product-info">
+          <!-- Başlık ve Marka -->
+          <h1 class="product-title mb-2">{{product?.productName}}</h1>
+          <div class="product-brand mb-3">
+            <span class="text-muted">Marka:</span> 
+            <a [routerLink]="['/products']" [queryParams]="{brandId: product?.brandId}">
+              {{product?.brand?.brandName}}
+            </a>
+          </div>
+  
+          <!-- Fiyat Bilgisi -->
+          <div class="product-price mb-4">
+            <div class="old-price text-muted text-decoration-line-through" *ngIf="hasDiscount">
+              {{product?.unitPrice | currency:'TRY':'symbol-narrow':'1.2-2'}}
+            </div>
+            <div class="current-price h3">
+              {{getDiscountedPrice() | currency:'TRY':'symbol-narrow':'1.2-2'}}
+            </div>
+          </div>
+  
+          <!-- Miktar Seçimi -->
+          <div class="quantity-selector mb-4">
+            <div class="d-flex align-items-center">
+              <button class="btn btn-outline-secondary" 
+                      (click)="decreaseQuantity()"
+                      [disabled]="quantity <= 1">
+                <i class="fas fa-minus"></i>
+              </button>
+              <input type="number" 
+                     class="form-control text-center mx-2" 
+                     style="width: 80px"
+                     [(ngModel)]="quantity" 
+                     min="1">
+              <button class="btn btn-outline-secondary" 
+                      (click)="increaseQuantity()"
+                      [disabled]="quantity >= product?.unitsInStock">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          </div>
+  
+          <!-- Aksiyon Butonları -->
+          <div class="action-buttons mb-4">
+            <button class="btn btn-primary btn-lg me-2" 
+                    (click)="addToCart()"
+                    [disabled]="!product?.unitsInStock">
+              <i class="fas fa-shopping-cart me-2"></i>
+              Sepete Ekle
+            </button>
+            <button class="btn btn-outline-danger btn-lg" 
+                    (click)="toggleFavorite()">
+              <i class="fas" 
+                 [class.fa-heart]="isFavorite"
+                 [class.far]="!isFavorite"></i>
+            </button>
+          </div>
+  
+          <!-- Stok Durumu -->
+          <div class="stock-info mb-4">
+            <span class="badge" 
+                  [class.bg-success]="product?.unitsInStock > 0"
+                  [class.bg-danger]="product?.unitsInStock === 0">
+              {{product?.unitsInStock > 0 ? 'Stokta' : 'Stokta Yok'}}
+            </span>
+            <span class="ms-2 text-muted" *ngIf="product?.unitsInStock > 0">
+              ({{product?.unitsInStock}} adet)
+            </span>
+          </div>
+  
+          <!-- Ürün Detayları -->
+          <div class="product-details">
+            <ul class="nav nav-tabs" id="productTabs" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#description">
+                  Ürün Açıklaması
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#specifications">
+                  Teknik Özellikler
+                </a>
+              </li>
+            </ul>
+            <div class="tab-content p-3 border border-top-0">
+              <div class="tab-pane fade show active" id="description">
+                <!-- Ürün açıklaması buraya -->
+              </div>
+              <div class="tab-pane fade" id="specifications">
+                <!-- Teknik özellikler buraya -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

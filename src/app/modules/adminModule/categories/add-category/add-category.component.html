@@ -1,0 +1,14 @@
+<div class="container">
+    <h2>Kategori Ekle</h2>
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="categoryName">Category Name</label>
+        <input type="text" class="form-control" id="categoryName" formControlName="categoryName">
+        <div *ngIf="categoryForm.get('categoryName').invalid && categoryForm.get('categoryName').touched" class="text-danger">
+          Kategori İsmi zorunludur.
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success" [disabled]="categoryForm.invalid">Ekle</button>
+    </form>
+  </div>
+  

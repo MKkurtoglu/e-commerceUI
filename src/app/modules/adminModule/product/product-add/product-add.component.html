@@ -1,0 +1,48 @@
+<div class="container">
+    <h2>Ürün Ekle</h2>
+    <form [formGroup]="productAddForm" (ngSubmit)="addProduct()">
+      <!-- Product Name Input -->
+      <div class="form-group">
+        <label for="productName">Ürün Adı:</label>
+        <input id="productName" formControlName="productName" type="text" class="form-control" placeholder="Ürün Adı Giriniz" />
+        <!-- <div *ngIf="productAddForm.get('productName').invalid && productAddForm.get('productName').touched" class="error">
+          Ürün adı zorunludur.
+        </div> -->
+        <div *ngIf="productAddForm.get('productName').hasError('customError')" class="error">
+          <!-- Custom error message from backend -->
+          {{ productAddForm.get('productName').getError('customError') }}
+        </div>
+      </div>
+  
+      <!-- Unit Price Input -->
+      <div class="form-group">
+        <label for="unitPrice">Birim Fiyat:</label>
+        <input id="unitPrice" formControlName="unitPrice" type="number" class="form-control" placeholder="Birim Fiyat Giriniz" />
+        <div *ngIf="productAddForm.get('unitPrice').invalid && productAddForm.get('unitPrice').touched" class="error">
+          Birim fiyat zorunludur.
+        </div>
+      </div>
+  
+      <!-- Units In Stock Input -->
+      <div class="form-group">
+        <label for="unitsInStock">Stok Adedi:</label>
+        <input id="unitsInStock" formControlName="unitsInStock" type="number" class="form-control" placeholder="Stok Adedi Giriniz" />
+        <div *ngIf="productAddForm.get('unitsInStock').invalid && productAddForm.get('unitsInStock').touched" class="error">
+          Stok adedi zorunludur.
+        </div>
+      </div>
+  
+      <!-- Category ID Input -->
+      <div class="form-group">
+        <label for="categoryId">Kategori ID:</label>
+        <input id="categoryId" formControlName="categoryId" type="number" class="form-control" placeholder="Kategori ID Giriniz" />
+        <div *ngIf="productAddForm.get('categoryId').invalid && productAddForm.get('categoryId').touched" class="error">
+          Kategori ID zorunludur.
+        </div>
+      </div>
+  
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary" [disabled]="productAddForm.invalid">Ürünü Ekle</button>
+    </form>
+  </div>
+  

@@ -1,0 +1,10 @@
+<div  class="image-gallery">
+    <div class="image-item" >
+      <img [src]="getImageUrl(category.images.image.filePath)" alt="Car image" (click)="openImageInModal(category.images.image.filePath)">
+      <button (click)="deleteImage(category.images.imageId)">Delete Image</button>
+    </div>
+  </div>
+  <div *ngIf="!category || category==null">
+    No images available.
+  </div>
+  

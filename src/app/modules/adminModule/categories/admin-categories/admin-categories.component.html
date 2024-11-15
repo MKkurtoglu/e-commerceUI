@@ -1,0 +1,69 @@
+<div class="container" *ngIf="!isEditing">
+  <div class="row mb-3">
+    <div class="col-md-2">
+      <button class="btn btn-primary" [routerLink]="['/Admin/categories/category-add']">Kategori Ekle</button>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Kategori Adı</th>
+        <th>Resim</th>
+        <th>İşlemler</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let category of categories">
+        <td>{{ category.categoryId }}</td>
+        <td>{{ category.categoryName }}</td>
+        <td>
+          <img *ngIf="category.images?.image?.filePath" [src]="category.images.image.filePath" alt="Kategori Resmi" width="50">
+        </td>
+        <td>
+          <label [for]="'fileInput-' + category.categoryId" class="btn btn-info btn-sm">
+            Resim Yükle
+          </label>
+          <input type="file" [id]="'fileInput-' + category.categoryId" style="display: none;" (change)="onFileChange($event, category.categoryId)" />
+          <button class="btn btn-warning btn-sm"  [routerLink]="['/admin/categories/category-edit', category.categoryId]" >Düzenle</button>
+          <!-- <button class="btn btn-warning btn-sm" [routerLink]="['category-edit', category.categoryId]">Düzenle</button> -->
+
+          <button class="btn btn-danger btn-sm" (click)="deleteCategory(category.categoryId)">Sil</button>
+          
+        </td>
+        <td>
+          <button [routerLink]="['/admin/categories/category-image', category.categoryId]" class="btn btn-primary btn-sm">
+            Resimler
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- <div *ngIf="isEditing">
+  <h3>Kategori Ekleme / Güncelleme</h3>
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    
+   
+    <div class="form-group mb-3">
+      <label for="categoryName">Kategori Adı</label>
+      <input id="categoryName" formControlName="categoryName" type="text" class="form-control" placeholder="Kategori Adı Girin">
+      <div *ngIf="categoryForm.get('categoryName')?.touched && categoryForm.get('categoryName')?.hasError('required')" class="text-danger">
+        Kategori adı zorunludur.
+      </div>
+    </div>
+
+   
+    <div class="form-group mb-3">
+      <label for="categoryImage">Kategori Resmi Yükle</label>
+      <input type="file" id="categoryImage" (change)="onFileChange($event, selectedCategory?.categoryId)" class="form-control">
+      <div *ngIf="isImageLoading" class="text-info">Resim yükleniyor...</div>
+    </div>
+
+    
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+    <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Vazgeç</button>
+  </form>
+</div> -->

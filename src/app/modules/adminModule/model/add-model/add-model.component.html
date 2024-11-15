@@ -1,0 +1,32 @@
+<div class="container">
+    <h2>Model Ekle</h2>
+    <form [formGroup]="modelForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="modelName">Model Adı</label>
+        <input
+          type="text"
+          id="modelName"
+          class="form-control"
+          formControlName="modelName"
+          required
+        />
+        <div *ngIf="modelForm.get('modelName')?.invalid && modelForm.get('modelName')?.touched" class="text-danger">
+          Model adı zorunludur!
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="brandId">Marka</label>
+    <select id="brandId" formControlName="brandId" class="form-control">
+      <option *ngFor="let brand of brands" [value]="brand.brandId">{{ brand.brandName }}</option>
+    </select>
+        <div *ngIf="modelForm.get('brandId')?.invalid && modelForm.get('brandId')?.touched" class="text-danger">
+          Marka seçimi zorunludur!
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-success" [disabled]="modelForm.invalid">Ekle</button>
+      <button type="button" class="btn btn-success"  routerLink="/admin/model">Vazgeç</button>
+    </form>
+  </div>
+  

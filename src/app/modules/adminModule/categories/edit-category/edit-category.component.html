@@ -1,0 +1,14 @@
+<div class="container">
+    <h2>Kategori Güncelle</h2>
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="categoryName">Category Name</label>
+        <input type="text" class="form-control" id="categoryName" formControlName="categoryName">
+        <div *ngIf="categoryForm.get('categoryName').invalid && categoryForm.get('categoryName').touched" class="text-danger">
+          Kategori adı zorunludur.
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="categoryForm.invalid">Kategori Güncelle</button>
+    </form>
+  </div>
+  

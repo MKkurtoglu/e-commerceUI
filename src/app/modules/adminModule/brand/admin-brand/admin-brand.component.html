@@ -1,0 +1,32 @@
+<div class="container">
+    <h2>Model Listesi</h2>
+    
+    <!-- Model Ekle Butonu -->
+    <button class="btn btn-primary" [routerLink]="['brand-add']">Marka Ekle</button>
+  
+    <table class="table table-striped mt-4">
+      <thead>
+        <tr>
+          <th>Marka ID</th>
+          <th>Marka Adı</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let brand of brands">
+          <td>{{ brand.brandId }}</td>
+          <td>{{ brand.brandName }}</td>
+          
+          <td>
+            <!-- Düzenle Butonu -->
+            <button class="btn btn-warning" [routerLink]="['brand-edit', brand.brandId]">Düzenle</button>
+            <!-- Sil Butonu -->
+            <button class="btn btn-danger" (click)="deleteBrand(brand.brandId)">Sil</button>
+          </td>
+        </tr>
+      </tbody>
+      <router-outlet></router-outlet>
+    </table>
+    
+  </div>
+  

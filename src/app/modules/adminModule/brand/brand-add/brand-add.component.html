@@ -1,0 +1,24 @@
+<div class="container">
+    <h2>Marka Ekle</h2>
+    <form [formGroup]="brandForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="modelName">Marka Adı</label>
+        <input
+          type="text"
+          id="brandName"
+          class="form-control"
+          formControlName="brandName"
+          required
+        />
+        <div *ngIf="brandForm.get('brandName')?.invalid && brandForm.get('brandName')?.touched" class="text-danger">
+          Model adı zorunludur!
+        </div>
+      </div>
+  
+      
+  
+      <button type="submit" class="btn btn-success" [disabled]="brandForm.invalid">Ekle</button>
+      <button type="button" class="btn btn-success"  routerLink="/admin/brand">Vazgeç</button>
+    </form>
+  </div>
+  

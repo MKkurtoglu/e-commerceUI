@@ -1,0 +1,59 @@
+<div class="categories-container">
+  <!-- Başlık -->
+  <div class="categories-header">
+    <h5 class="mb-3">Kategoriler</h5>
+    <span class="category-count">{{categories.length}} </span>
+  </div>
+
+  <!-- Kategori Listesi -->
+  <div class="categories-list">
+    <!-- Tüm Ürünler -->
+    <div class="category-item" 
+         [class.active]="clear"
+         (click)="selectCategory(undefined)"
+         routerLink="products">
+      <div class="category-content">
+        <div class="category-icon">
+          <i class="fas fa-th-large"></i>
+        </div>
+        <div class="category-details">
+          <span class="category-name" (click)=" clearcategory()">Tüm Ürünler</span>
+          <small class="category-product-count">{{totalProducts}} Ürün</small>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right category-arrow"></i>
+    </div>
+
+    <!-- Kategori Listesi -->
+    <div class="category-item" 
+         *ngFor="let category of categories"
+         [class.active]="selectedCategory === category && !clear"
+         (click)="selectCategory(category)">
+      <div class="category-content">
+        <div class="category-icon">
+          <i [class]="getCategoryIcon(category.categoryName)"></i>
+        </div>
+        <div class="category-details">
+          <span class="category-name">{{category.categoryName}}</span>
+          <small class="category-product-count">{{category.productCount || 0}} Ürün</small>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right category-arrow"></i>
+    </div>
+  </div>
+
+  <!-- Arama Filtreleri -->
+  <div class="filter-section mt-4" *ngIf="selectedCategory">
+    <h6>{{selectedCategory.categoryName}} Kategorisinde</h6>
+    <div class="selected-filters">
+      <span class="filter-tag">
+        En Yeniler
+        <i class="fas fa-times"></i>
+      </span>
+      <span class="filter-tag">
+        Fiyat: Artan
+        <i class="fas fa-times"></i>
+      </span>
+    </div>
+  </div>
+</div>

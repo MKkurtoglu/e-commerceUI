@@ -1,0 +1,75 @@
+<div class="filter-container">
+  <!-- Fiyat Filtreleri -->
+  <div class="filter-group">
+      <div class="filter-header">
+          <h6>
+              <i class="fas fa-dollar-sign"></i>
+              Fiyat Aralığı
+          </h6>
+          <button class="filter-toggle" (click)="togglePriceFilter()">
+              <i class="fas" [ngClass]="isPriceFilterOpen ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+          </button>
+      </div>
+      <div class="filter-body" [ngClass]="{'show': isPriceFilterOpen}">
+          <div class="custom-checkbox" *ngFor="let range of priceRanges">
+              <label [for]="'price-' + range.value" class="checkbox-wrapper">
+                  <input type="checkbox"
+                         [id]="'price-' + range.value"
+                         (change)="onFilterPriceChange(range.value, $event)">
+                  <span class="checkmark"></span>
+                  <span class="label-text">{{ range.label }}</span>
+                  <span class="count">({{ range.count || 0 }})</span>
+              </label>
+          </div>
+      </div>
+  </div>
+
+  <!-- Marka Filtreleri -->
+  <div class="filter-group">
+      <div class="filter-header">
+          <h6>
+              <i class="fas fa-tag"></i>
+              Markalar
+          </h6>
+          <button class="filter-toggle" (click)="toggleBrandFilter()">
+              <i class="fas" [ngClass]="isBrandFilterOpen ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+          </button>
+      </div>
+      <div class="filter-body" [ngClass]="{'show': isBrandFilterOpen}">
+          <!-- Marka Arama -->
+          <div class="search-box">
+              <input type="text" 
+                     placeholder="Marka ara..."
+                     [(ngModel)]="brandSearchTerm"
+                     (input)="filterBrands()">
+              <i class="fas fa-search"></i>
+          </div>
+          
+          <div class="custom-checkbox" *ngFor="let brand of filteredBrands">
+              <label [for]="'brand-' + brand.brandId" class="checkbox-wrapper">
+                  <input type="checkbox"
+                         [id]="'brand-' + brand.brandId"
+                         (change)="onFilterBrandChange(brand.brandName, $event)">
+                  <span class="checkmark"></span>
+                  <span class="label-text">{{ brand.brandName }}</span>
+                  <span class="count">({{ brand.count || 0 }})</span>
+              </label>
+          </div>
+      </div>
+  </div>
+
+  <!-- Aktif Filtreler -->
+  <div class="active-filters" *ngIf="hasActiveFilters">
+      <h6>Seçili Filtreler</h6>
+      <div class="filter-tags">
+          <span class="filter-tag" *ngFor="let filter of activeFilters">
+              {{ filter.label }}
+              <i class="fas fa-times" (click)="removeFilter(filter)"></i>
+          </span>
+      </div>
+      <button class="clear-filters" (click)="clearAllFilters()">
+          <i class="fas fa-trash-alt"></i>
+          Tüm Filtreleri Temizle
+      </button>
+  </div>
+</div>

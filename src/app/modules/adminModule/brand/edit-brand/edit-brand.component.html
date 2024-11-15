@@ -1,0 +1,24 @@
+<div class="container">
+    <h2>Marka Düzenle</h2>
+    <form [formGroup]="brandForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="brandName">Marka Adı</label>
+        <input
+          type="text"
+          id="brandName"
+          class="form-control"
+          formControlName="brandName"
+          required
+        />
+        <div *ngIf="brandForm.get('brandName')?.invalid && brandForm.get('brandName')?.touched" class="text-danger">
+          Marka adı zorunludur!
+        </div>
+      </div>
+  
+      
+  
+      <button type="submit" class="btn btn-success" [disabled]="brandForm.invalid">Güncelle</button>
+      <button type="submit" class="btn btn-success" routerLink="/admin/brand">Vazgeç</button>
+    </form>
+  </div>
+  

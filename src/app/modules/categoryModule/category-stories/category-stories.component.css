@@ -1,0 +1,191 @@
+.category-stories {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 1rem 0;
+    margin-bottom: 2rem;
+  }
+  
+  .category-stories__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .category-stories__scroll {
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .category-stories__scroll::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .category-stories__wrapper {
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 1rem;
+  }
+  
+  .category-stories__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+  }
+  
+  .category-stories__item:hover {
+    transform: translateY(-2px);
+  }
+  
+  .category-stories__item:hover .category-stories__image-wrapper {
+    border-color: #3b82f6;
+  }
+  
+  .category-stories__item:hover .category-stories__name {
+    color: #3b82f6;
+  }
+  
+  .category-stories__image-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #e5e7eb;
+    margin-bottom: 0.5rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  .category-stories__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .category-stories__name {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #374151;
+    text-align: center;
+    transition: color 0.3s ease;
+  }
+  .category-stories {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 1.5rem 0;
+    margin-bottom: 2rem;
+  }
+  
+  .category-stories__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  
+  .category-stories__scroll {
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding: 1rem 0;
+  }
+  
+  .category-stories__scroll::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .category-stories__wrapper {
+    display: flex;
+    justify-content: space-between; /* Eşit aralıklı dağılım */
+    gap: 1.8rem; /* Kategoriler arası boşluk */
+    padding-bottom: 1rem;
+    min-width: min-content; /* İçeriğe göre minimum genişlik */
+  }
+  
+  .category-stories__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 100px; /* Minimum genişlik artırıldı */
+    max-width: 120px; /* Maximum genişlik eklendi */
+    text-decoration: none;
+    transition: transform 0.3s ease;
+    padding: 0.5rem;
+  }
+  
+  .category-stories__item:hover {
+    transform: translateY(-2px);
+  }
+  
+  .category-stories__item:hover .category-stories__image-wrapper {
+    border-color: #3b82f6;
+  }
+  
+  .category-stories__item:hover .category-stories__name {
+    color: #3b82f6;
+  }
+  
+  .category-stories__image-wrapper {
+    width: 100px; /* Genişlik artırıldı */
+    height: 100px; /* Yükseklik artırıldı */
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #e5e7eb;
+    margin-bottom: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  .category-stories__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .category-stories__name {
+    font-size: 0.875rem; /* Font boyutu artırıldı */
+    font-weight: 500;
+    color: #374151;
+    text-align: center;
+    transition: color 0.3s ease;
+    word-wrap: break-word;
+    width: 100%;
+  }
+  
+  /* Responsive tasarım için medya sorguları */
+  @media screen and (max-width: 768px) {
+    .category-stories__wrapper {
+      gap: 1rem;
+      justify-content: flex-start; /* Mobile'da sola hizalı */
+    }
+  
+    .category-stories__item {
+      min-width: 80px;
+      max-width: 100px;
+    }
+  
+    .category-stories__image-wrapper {
+      width: 80px;
+      height: 80px;
+    }
+  
+    .category-stories__name {
+      font-size: 0.75rem;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .category-stories__container {
+      padding: 0 1rem;
+    }
+  
+    .category-stories__item {
+      min-width: 70px;
+      max-width: 90px;
+    }
+  
+    .category-stories__image-wrapper {
+      width: 70px;
+      height: 70px;
+    }
+  }
